@@ -1,0 +1,6 @@
+cffi==1.13.2
+clipspy==0.3.2
+imutils==0.5.3
+numpy==1.17.4
+opencv-contrib-python==4.1.1.26
+pycparser==2.19

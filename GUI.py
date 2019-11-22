@@ -184,8 +184,9 @@ Builder.load_string('''
                     font_size: 12
                     pos_hint: {'x': 0.35, 'y': 0.4}
 
+                # TextInput:
                 Image:
-                    id: result
+                    id: facts
                     pos_hint: {'center_x': 0.5}
                     source: 'img/white.png'
                     allow_stretch: True
@@ -208,7 +209,7 @@ Builder.load_string('''
                     pos_hint: {'x': 0.38, 'y': 0.4}
 
                 Image:
-                    id: result
+                    id: rules
                     pos_hint: {'center_x': 0.5}
                     source: 'img/white.png'
                     allow_stretch: True

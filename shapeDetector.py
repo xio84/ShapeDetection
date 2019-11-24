@@ -191,15 +191,18 @@ def shapeDetection(path, threshold=230, arcLengthPercentage=0.005, loggingLevel=
             index += 1
             filename = 'shape' + str(index) + ".jpg"
             crop_img = img[minY:maxY, minX:maxX]
-            cv2.imshow(filename, crop_img)
+            # cv2.imshow(filename, crop_img)
             cv2.imwrite(filename, crop_img)
             result.append({'numberOfVectors': lines[0], 'vectors': lines[1], 'facts': desc, 'rules': activatedRules, 'imgPath': 'temp/' + filename})
 
     # cv2.imshow("shapes", img)
-    # cv2.imshow("Threshold", threshold)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    cv2.imwrite("Threshold.jpg", threshold)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
+
+    os.chdir('..')
     numberOfShapes = len(result)
+    env.clear()
     result = {'numberOfShapes': numberOfShapes, 'shapesArray': result}
     return result
 

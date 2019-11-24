@@ -31,6 +31,8 @@ Config.set('graphics', 'resizable', '0')
 Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
 
+import shapeDetector as sd
+
 import os
 
 # from shapeDetector import *
@@ -390,56 +392,110 @@ class MainScreen(Screen):
         quad = self.ids.tv.add_node(CustomLabel(text='Quadrilateral', font_size='10', internal_id=10))
 
         parralelogram = self.ids.tv.add_node(CustomLabel(text='Jajar genjang', font_size='10', internal_id=11), quad)
-        self.ids.tv.add_node(CustomLabel(text='Beraturan', font_size='10', internal_id=12), parralelogram)
-        self.ids.tv.add_node(CustomLabel(text='Layang-layang', font_size='10', internal_id=13), parralelogram)
+        beraturan = self.ids.tv.add_node(CustomLabel(text='Beraturan', font_size='10', internal_id=12), parralelogram)
+        self.ids.tv.add_node(CustomLabel(text='Persegi', font_size='10', internal_id=13), beraturan)
+        self.ids.tv.add_node(CustomLabel(text='Paralelogram', font_size='10', internal_id=14), beraturan)
+        self.ids.tv.add_node(CustomLabel(text='Layang-layang', font_size='10', internal_id=15), parralelogram)
 
-        trapezoid = self.ids.tv.add_node(CustomLabel(text='Trapesium', font_size='10', internal_id=14), quad)
-        self.ids.tv.add_node(CustomLabel(text='Sama kaki', font_size='10', internal_id=15), trapezoid)
-        self.ids.tv.add_node(CustomLabel(text='Rata kanan', font_size='10', internal_id=16), trapezoid)
-        self.ids.tv.add_node(CustomLabel(text='Rata kiri', font_size='10', internal_id=17), trapezoid)
+        trapezoid = self.ids.tv.add_node(CustomLabel(text='Trapesium', font_size='10', internal_id=16), quad)
+        self.ids.tv.add_node(CustomLabel(text='Sama kaki', font_size='10', internal_id=17), trapezoid)
+        self.ids.tv.add_node(CustomLabel(text='Rata kanan', font_size='10', internal_id=18), trapezoid)
+        self.ids.tv.add_node(CustomLabel(text='Rata kiri', font_size='10', internal_id=19), trapezoid)
 
-        penta = self.ids.tv.add_node(CustomLabel(text='Pentagon', font_size='10', internal_id=18))
+        penta = self.ids.tv.add_node(CustomLabel(text='Pentagon', font_size='10', internal_id=20))
 
-        hexa = self.ids.tv.add_node(CustomLabel(text='Hexagon', font_size='10', internal_id=19))
+        hexa = self.ids.tv.add_node(CustomLabel(text='Hexagon', font_size='10', internal_id=21))
     
     def search(self):
-        shapeName = ''
+        shapes = sd.shapeDetection("img/shapes.jpg", threshold=240)['shapesArray']
         if (CHOSEN_SHAPE == 2):
-            shapeName = 'Segitiga Lancip'
+            # shapeName = 'Segitiga Lancip'
+            for shape in shapes:
+                if (shape['facts'].count(' sharp')):
+                    print(True)
         elif (CHOSEN_SHAPE == 3):
-            shapeName = 'Segitiga Tumpul'
+            # shapeName = 'Segitiga Tumpul'
+            for shape in shapes:
+                if (shape['facts'].count(' obstuse')):
+                    print(True)
         elif (CHOSEN_SHAPE == 4):
-            shapeName = 'Segitiga Siku'
+            # shapeName = 'Segitiga Siku'
+            for shape in shapes:
+                if (shape['facts'].count(' right')):
+                    print(True)
         elif (CHOSEN_SHAPE == 6):
-            shapeName = 'Segitiga Sama Kaki dan Siku'
+            # shapeName = 'Segitiga Sama Kaki dan Siku'
+            for shape in shapes:
+                if (shape['facts'].count(' isosceles') and shape['facts'].count(' right')):
+                    print(True)
         elif (CHOSEN_SHAPE == 7):
-            shapeName = 'Segitiga Sama Kaki dan Tumpul'
+            # shapeName = 'Segitiga Sama Kaki dan Tumpul'
+            for shape in shapes:
+                if (shape['facts'].count(' isosceles') and shape['facts'].count(' obstuse')):
+                    print(True)
         elif (CHOSEN_SHAPE == 8):
-            shapeName = 'Segitiga Sama Kaki dan Lancip'
+            # shapeName = 'Segitiga Sama Kaki dan Lancip'
+            for shape in shapes:
+                if (shape['facts'].count(' isosceles') and shape['facts'].count(' sharp')):
+                    print(True)
         elif (CHOSEN_SHAPE == 9):
-            shapeName = 'Segitiga Sama Sisi'
+            # shapeName = 'Segitiga Sama Sisi'
+            for shape in shapes:
+                if (shape['facts'].count(' equilateral')):
+                    print(True)
         elif (CHOSEN_SHAPE == 12):
-            shapeName = 'Jajar Genjang Beraturan'
+            # shapeName = 'Jajar Genjang Beraturan'
+            for shape in shapes:
+                if (shape['facts'].count(' rectangle')):
+                    print(True)
         elif (CHOSEN_SHAPE == 13):
-            shapeName = 'Jajar Genjang Layang'
+            # shapeName = 'Persegi'
+            for shape in shapes:
+                if (shape['facts'].count(' rectangle')):
+                    print(True)
+        elif (CHOSEN_SHAPE == 14):
+            # shapeName = 'Paralelogram'
+            for shape in shapes:
+                if (shape['facts'].count(' parallelogram')):
+                    print(True)            
         elif (CHOSEN_SHAPE == 15):
-            shapeName = 'Trapesium Sama Kaki'
-        elif (CHOSEN_SHAPE == 16):
-            shapeName = 'Trapesium Rata Kanan'
+            # shapeName = 'Layang-Layang'
+            for shape in shapes:
+                if (shape['facts'].count(' kite')):
+                    print(True)
         elif (CHOSEN_SHAPE == 17):
-            shapeName = 'Trapesium Rata Kiri'
+            # shapeName = 'Trapesium Sama Kaki'
+            for shape in shapes:
+                if (shape['facts'].count(' regular')):
+                    print(True)
         elif (CHOSEN_SHAPE == 18):
-            shapeName = 'Pentagon'
+            # shapeName = 'Trapesium Rata Kanan'
+            for shape in shapes:
+                if (shape['facts'].count(' right-side')):
+                    print(True)
         elif (CHOSEN_SHAPE == 19):
-            shapeName = 'Hexagon'
+            # shapeName = 'Trapesium Rata Kiri'
+            for shape in shapes:
+                if (shape['facts'].count(' left-side')):
+                    print(True)
+        elif (CHOSEN_SHAPE == 20):
+            # shapeName = 'Pentagon'
+            for shape in shapes:
+                if (shape['facts'].count(' pentagon')):
+                    print(True)
+        elif (CHOSEN_SHAPE == 21):
+            # shapeName = 'Hexagon'
+            for shape in shapes:
+                if (shape['facts'].count(' hexagon')):
+                    print(True)
 
-        print(shapeName)
+        # print(sd.shapeDetection("img/shapes.jpg", threshold=240))
+        # print(shapeName)
     
     def open(self, path, filename):
         with open(os.path.join(path, filename[0])) as f:
             print(f.read())
-        
-        print(shapeName)
+    
 
     def update(self, instance):
         self.changeImg()

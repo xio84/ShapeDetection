@@ -325,16 +325,6 @@ Builder.load_string('''
                     size: self.size 
             on_selection: root.select(*args) 
         
-    Button:
-        text: 'Back to Main Screen'
-        background_normal: ''
-        background_color: 1,1,1,1
-        color: 0,0,0,1
-        font_size: 10
-        size_hint: (0.5, 0.05)
-        on_release: 
-            root.manager.current= 'MainScreen'
-            
     # Adding label 
     Label: 
         id: label 
@@ -345,6 +335,18 @@ Builder.load_string('''
             Rectangle: 
                 pos: self.pos 
                 size: self.size 
+
+    Button:
+        text: 'Back to Main Screen'
+        background_normal: ''
+        background_color: 0,0,0,0
+        color: 1,1,1,1
+        font_size: 20
+        size_hint: (0.5, 0.05)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.19}
+        on_release: 
+            root.manager.current= 'MainScreen'
+            
 '''
 )
 class CustomLabel(TreeViewLabel):

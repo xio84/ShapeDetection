@@ -21,6 +21,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.factory import Factory
 from kivy.properties import ObjectProperty
+from kivy.properties import NumericProperty
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
@@ -30,6 +31,8 @@ from kivy.config import Config
 Config.set('graphics', 'resizable', '0')
 Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
+
+import shapeDetector as sd
 
 import os
 
@@ -427,12 +430,13 @@ class MainScreen(Screen):
         elif (CHOSEN_SHAPE == 19):
             shapeName = 'Hexagon'
 
+        print(sd.shapeDetection("img/shapes.jpg", threshold=240))
         print(shapeName)
     
     def open(self, path, filename):
         with open(os.path.join(path, filename[0])) as f:
             print(f.read())
-        
+    
         print(shapeName)
 
 # create the layout class 

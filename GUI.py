@@ -140,6 +140,7 @@ Builder.load_string('''
                         color: 0,0,0,1
                         font_size: 10
                         size_hint: (1, 0.05)
+                        on_release: root.changeRulesText(root.arrayRules)
 
                     Button:
                         text: 'Show Facts'
@@ -148,6 +149,7 @@ Builder.load_string('''
                         color: 0,0,0,1
                         font_size: 10
                         size_hint: (1, 0.05)
+                        on_release: root.changeFactsText(root.arrayFacts)
                     
                     Button:
                         text: 'Search'
@@ -351,6 +353,15 @@ class MainScreen(Screen):
     factsText = StringProperty('')
     rulesText = StringProperty('')
 
+    arrayFacts = ''
+    arrayRules = ''
+
+    def changeArrayFacts(self, text):
+        self.arrayFacts = text
+    
+    def changeArrayRules(self, text):
+        self.arrayRules = text
+
     def changeStatus(self, success):
         if (success):
             self.resultimg = 'img/success.png'
@@ -416,6 +427,9 @@ class MainScreen(Screen):
         hexa = self.ids.tv.add_node(CustomLabel(text='Hexagon', font_size='10', internal_id=21))
     
     def search(self):
+        text = ['']
+        self.changeFactsText(text)
+        self.changeRulesText(text)
         shapes = sd.shapeDetection("img/shapes.jpg", threshold=240)['shapesArray']
         status = False
         if (CHOSEN_SHAPE == 2):
@@ -425,8 +439,8 @@ class MainScreen(Screen):
                     if (' sharp' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 3):
@@ -436,8 +450,8 @@ class MainScreen(Screen):
                     if ('obstuse' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 4):
@@ -447,8 +461,8 @@ class MainScreen(Screen):
                     if (' right' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 6):
@@ -458,8 +472,8 @@ class MainScreen(Screen):
                     if (' isosceles' in i and ' right' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 7):
@@ -469,8 +483,8 @@ class MainScreen(Screen):
                     if (' isosceles' in i and ' obstuse' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 8):
@@ -480,8 +494,8 @@ class MainScreen(Screen):
                     if (' isoscelse' in i and ' sharp' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 9):
@@ -491,8 +505,8 @@ class MainScreen(Screen):
                     if (' equilateral' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 13):
@@ -502,8 +516,8 @@ class MainScreen(Screen):
                     if (' rectangle' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 14):
@@ -513,8 +527,8 @@ class MainScreen(Screen):
                     if (' parallelogram' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)      
         elif (CHOSEN_SHAPE == 15):
@@ -524,8 +538,8 @@ class MainScreen(Screen):
                     if (' kite' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 17):
@@ -535,8 +549,8 @@ class MainScreen(Screen):
                     if (' regular' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 18):
@@ -546,8 +560,8 @@ class MainScreen(Screen):
                     if (' rigth-side' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 19):
@@ -557,8 +571,8 @@ class MainScreen(Screen):
                     if (' left-side' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 20):
@@ -568,8 +582,8 @@ class MainScreen(Screen):
                     if (' pentagon' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
         elif (CHOSEN_SHAPE == 21):
@@ -579,8 +593,8 @@ class MainScreen(Screen):
                     if (' hexagon' in i):
                         status = True
                         self.changeDetection(shape['imgPath'])
-                        self.changeFactsText(shape['facts'])
-                        self.changeRulesText(shape['rules'])
+                        self.changeArrayFacts(shape['facts'])
+                        self.changeArrayRules(shape['rules'])
                         break
             self.changeStatus(status)
 

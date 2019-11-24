@@ -53,7 +53,6 @@
 
 (defrule right
     (result triangle)
-    (result ~right)
     (av (angle 90))
     =>
     (assert (result right))
@@ -62,7 +61,7 @@
 (defrule obtuse
     (shape triangle)
     (av (angle ?a))
-    (> ?a 90)
+    (test (> ?a 90))
     =>
     (assert (result obtuse))
     )
@@ -72,9 +71,9 @@
     (av (number 1) (angle ?a1))
     (av (number 2) (angle ?a2))
     (av (number 3) (angle ?a3))
-    (< ?a1 90)
-    (< ?a2 90)
-    (< ?a3 90)
+    (test (< ?a1 90))
+    (test (< ?a2 90))
+    (test (< ?a3 90))
     =>
     (assert (result sharp))
     )
@@ -128,9 +127,9 @@
     (av (number ?n2&~?n1) (xAxis ?x2))
     (av (number ?n3&~?n2&~?n1) (xAxis ?x3))
     (av (number ?n4&~?n3&~?n2&~?n1) (xAxis ?x4))
-    (> ?x1 ?x2)
-    (> ?x1 ?x3)
-    (> ?x1 ?x4)
+    (test (> ?x1 ?x2))
+    (test (> ?x1 ?x3))
+    (test (> ?x1 ?x4))
     =>
     (assert (result right-side))
     )
@@ -141,9 +140,9 @@
     (av (number ?n2&~?n1) (xAxis ?x2))
     (av (number ?n3&~?n2&~?n1) (xAxis ?x3))
     (av (number ?n4&~?n3&~?n2&~?n1) (xAxis ?x4))
-    (< ?x1 ?x2)
-    (< ?x1 ?x3)
-    (< ?x1 ?x4)
+    (test (< ?x1 ?x2))
+    (test (< ?x1 ?x3))
+    (test (< ?x1 ?x4))
     =>
     (assert (result left-side))
     )

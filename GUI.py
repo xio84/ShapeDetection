@@ -183,18 +183,29 @@ Builder.load_string('''
                     valign: 'middle'
                     font_size: 12
                     pos_hint: {'x': 0.35, 'y': 0.4}
-
-                # TextInput:
-                Image:
-                    id: facts
-                    pos_hint: {'center_x': 0.5}
-                    source: 'img/white.png'
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint_y: None
-                    size_hint_x: None
-                    width: self.parent.width - 30
-                    height: self.parent.width - 30/self.image_ratio
+                
+                BoxLayout:
+                    # size_hint: 1.08, 1.08
+                    # pos_hint: {'top': 2}
+                    canvas.before:
+                        Color:
+                            rgba: 1,1,1,1
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    
+                    ScrollView:
+                        # do_scroll_x: False
+                        # do_scroll_y: True
+                        Label:
+                            size_hint_y: None
+                            height: self.texture_size[1]
+                            size: self.texture_size
+                            color: 0,0,0,1
+                            padding: 10, 10
+                            halign: 'left'
+                            valign: 'top'
+                            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
                     
             BoxLayout:
                 orientation: 'vertical'

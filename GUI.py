@@ -157,15 +157,6 @@ Builder.load_string('''
                         font_size: 10
                         size_hint: (1, 0.05)
                         on_release: root.search()
-                    
-                    # Button:
-                    #     text: 'Init Tree'
-                    #     background_normal: ''
-                    #     background_color: 1,1,1,1
-                    #     color: 0,0,0,1
-                    #     font_size: 10
-                    #     size_hint: (1, 0.05)
-                    #     on_release: root.createTree()
 
                 BoxLayout:
                     orientation: 'vertical'
@@ -195,17 +186,6 @@ Builder.load_string('''
                                 hide_root: False
                                 indent_level: 4
                                 size_hint_y: None
-                                
-                    # Image: #Placeholder
-                    #     id: placeholder
-                    #     pos_hint: {'center_x': 0.5}
-                    #     source: 'img/white.png'
-                    #     allow_stretch: True
-                    #     keep_ratio: True
-                    #     size_hint_y: None
-                    #     size_hint_x: None
-                    #     width: self.parent.width - 15
-                    #     height: self.parent.width - 15 /self.image_ratio
             
         #BOTTOM LAYOUT
         BoxLayout:
@@ -343,7 +323,7 @@ Builder.load_string('''
         color: 1,1,1,1
         font_size: 20
         size_hint: (0.5, 0.05)
-        pos_hint: {'center_x': 0.5, 'center_y': 0.19}
+        pos_hint: {'center_x': 0.5, 'center_y': 0.08}
         on_release: 
             root.manager.current= 'MainScreen'
             
@@ -376,6 +356,10 @@ class MainScreen(Screen):
             self.resultimg = 'img/success.png'
         else:
             self.resultimg = 'img/fail.png'
+            text = ['']
+            self.changeFactsText(text)
+            self.changeRulesText(text)
+            self.changeDetection('img/white.png')
 
     def changeSource(self):
         self.sourceimg = file_path

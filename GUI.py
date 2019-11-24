@@ -268,7 +268,7 @@ Builder.load_string('''
                             padding: 10, 10
                             halign: 'left'
                             valign: 'top'
-                            text: ('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' * 30)
+                            text: root.factsText
                     
             BoxLayout:
                 orientation: 'vertical'
@@ -303,7 +303,7 @@ Builder.load_string('''
                             padding: 10, 10
                             halign: 'left'
                             valign: 'top'
-                            text: ('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' * 30)
+                            text: root.rulesText
 
 <Filechooser>: 
       
@@ -366,9 +366,32 @@ class MainScreen(Screen):
     detectionimg = StringProperty('img/choose.png')
     resultimg = StringProperty('img/white.png')
 
-    def changeImg(self):
-        print(file_path)
+    factsText = StringProperty('')
+    rulesText = StringProperty('')
+
+    def changeStatus(self, success):
+        if (success):
+            self.resultimg = 'img/success.png'
+        else:
+            self.resultimg = 'img/fail.png'
+
+    def changeSource(self):
         self.sourceimg = file_path
+    
+    def changeDetection(self, path):
+        self.detectionimg = path
+    
+    def changeFactsText(self, arrayText):
+        text = ''
+        for i in arrayText:
+            text += i + '\n'
+        self.factsText = text
+    
+    def changeRulesText(self, arrayText):
+        text = ''
+        for i in arrayText:
+            text += i + '\n'
+        self.rulesText = text
 
     def openRuleEditor(self):
         osCommandString = "notepad.exe shapeClassification.clp"
@@ -408,86 +431,172 @@ class MainScreen(Screen):
     
     def search(self):
         shapes = sd.shapeDetection("img/shapes.jpg", threshold=240)['shapesArray']
+        status = False
         if (CHOSEN_SHAPE == 2):
             # shapeName = 'Segitiga Lancip'
             for shape in shapes:
-                if (shape['facts'].count(' sharp')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' sharp' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 3):
             # shapeName = 'Segitiga Tumpul'
             for shape in shapes:
-                if (shape['facts'].count(' obstuse')):
-                    print(True)
+                for i in shape['facts']:
+                    if ('obstuse' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 4):
             # shapeName = 'Segitiga Siku'
             for shape in shapes:
-                if (shape['facts'].count(' right')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' right' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 6):
             # shapeName = 'Segitiga Sama Kaki dan Siku'
             for shape in shapes:
-                if (shape['facts'].count(' isosceles') and shape['facts'].count(' right')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' isosceles' in i and ' right' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 7):
             # shapeName = 'Segitiga Sama Kaki dan Tumpul'
             for shape in shapes:
-                if (shape['facts'].count(' isosceles') and shape['facts'].count(' obstuse')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' isosceles' in i and ' obstuse' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 8):
             # shapeName = 'Segitiga Sama Kaki dan Lancip'
             for shape in shapes:
-                if (shape['facts'].count(' isosceles') and shape['facts'].count(' sharp')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' isoscelse' in i and ' sharp' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 9):
             # shapeName = 'Segitiga Sama Sisi'
             for shape in shapes:
-                if (shape['facts'].count(' equilateral')):
-                    print(True)
-        elif (CHOSEN_SHAPE == 12):
-            # shapeName = 'Jajar Genjang Beraturan'
-            for shape in shapes:
-                if (shape['facts'].count(' rectangle')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' equilateral' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 13):
             # shapeName = 'Persegi'
             for shape in shapes:
-                if (shape['facts'].count(' rectangle')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' rectangle' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 14):
             # shapeName = 'Paralelogram'
             for shape in shapes:
-                if (shape['facts'].count(' parallelogram')):
-                    print(True)            
+                for i in shape['facts']:
+                    if (' parallelogram' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)      
         elif (CHOSEN_SHAPE == 15):
             # shapeName = 'Layang-Layang'
             for shape in shapes:
-                if (shape['facts'].count(' kite')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' kite' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 17):
             # shapeName = 'Trapesium Sama Kaki'
             for shape in shapes:
-                if (shape['facts'].count(' regular')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' regular' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 18):
             # shapeName = 'Trapesium Rata Kanan'
             for shape in shapes:
-                if (shape['facts'].count(' right-side')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' rigth-side' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 19):
             # shapeName = 'Trapesium Rata Kiri'
             for shape in shapes:
-                if (shape['facts'].count(' left-side')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' left-side' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 20):
             # shapeName = 'Pentagon'
             for shape in shapes:
-                if (shape['facts'].count(' pentagon')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' pentagon' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
         elif (CHOSEN_SHAPE == 21):
             # shapeName = 'Hexagon'
             for shape in shapes:
-                if (shape['facts'].count(' hexagon')):
-                    print(True)
+                for i in shape['facts']:
+                    if (' hexagon' in i):
+                        status = True
+                        self.changeDetection(shape['imgPath'])
+                        self.changeFactsText(shape['facts'])
+                        self.changeRulesText(shape['rules'])
+                        break
+            self.changeStatus(status)
 
         # print(sd.shapeDetection("img/shapes.jpg", threshold=240))
         # print(shapeName)
@@ -498,7 +607,7 @@ class MainScreen(Screen):
     
 
     def update(self, instance):
-        self.changeImg()
+        self.changeSource()
 
 # create the layout class 
 class Filechooser(Screen): 
@@ -507,10 +616,8 @@ class Filechooser(Screen):
             global file_path
             self.label.text = args[1][0] 
             file_path = args[1][0]
-            print(file_path)
         except: pass
-    def changeImg(self, instance):
-        print(file_path)
+    def changeSource(self, instance):
         self.ids.source.source = StringProperty(file_path)
 
 sm = ScreenManager()

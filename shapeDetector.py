@@ -157,8 +157,8 @@ def shapeDetection(path, threshold=230, arcLengthPercentage=0.005, loggingLevel=
         for fact in env.facts():
             # print(fact)
             f = str(fact)
-            if f.find('result') != -1:
-                desc.append(f[7:-1])
+            # if f.find('result') != -1:
+            desc.append(f)
 
         # Make image with descriptions
         cv2.drawContours(img, [approx], 0, (0), 5)

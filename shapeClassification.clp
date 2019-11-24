@@ -154,11 +154,3 @@
     =>
     (assert (result regular))
     )
-
-;print-solution
-(defrule print-solution
-    (result ?r)
-    =>
-    (format t "%-12s" ?r)
-    (printout t crlf crlf)
-)

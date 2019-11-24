@@ -32,6 +32,7 @@ Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
 
 import os
+import webbrowser
 
 # from shapeDetector import *
 
@@ -126,7 +127,10 @@ Builder.load_string('''
                         color: 0,0,0,1
                         font_size: 10
                         size_hint: (1, 0.05)
-                        on_release: root.changeImg()
+                        on_release: 
+                            root.changeImg()
+                            root.openRuleEditor()
+
 
                     Button:
                         text: 'Show Rules'
@@ -329,7 +333,7 @@ Builder.load_string('''
         size_hint: (0.5, 0.05)
         on_release: 
             root.manager.current= 'MainScreen'
-                
+            root.changeImg()
 
     # Adding label 
     Label: 
@@ -363,8 +367,12 @@ class MainScreen(Screen):
     resultimg = 'img/white.png'
 
     def changeImg(self):
-        print(self.sourceimg)
-        self.sourceimg = 'img/success.png'
+        # print(self.sourceimg)
+        self.sourceimg = file_path
+
+    def openRuleEditor(self):
+        osCommandString = "notepad.exe shapeClassification.clp"
+        os.system(osCommandString)
 
     def createTree(self):
         tv = CustomTreeView(internal_id=0)

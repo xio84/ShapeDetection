@@ -184,8 +184,6 @@ def shapeDetection(path, threshold=230, arcLengthPercentage=0.005, loggingLevel=
             if (lines[1][i]['yAxis'] < minY):
                 minY = lines[1][i]['yAxis']
             i += 1
-            
-
 
         # Save shapes with facts
         if (len(desc) > 0):

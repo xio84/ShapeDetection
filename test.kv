@@ -1,0 +1,78 @@
+#:kivy 1.10.0
+
+<TreeViewLabel>:
+    on_touch_down:
+        app.root.name.text = self.text
+        app.root.popup.dismiss()
+
+<TreeviewGroup>:
+    id: treeview
+    treeview: treeview
+    title: "Select"
+    size_hint: None, None
+    size: 400, 200
+    auto_dismiss: False
+
+    BoxLayout
+        orientation: "vertical"
+        #TextInput:
+            #id: ti
+            #size_hint_y: .1
+            #on_text: root.filter(self.text)
+        BoxLayout:
+            id: treeview
+        Button:
+            size_hint: 1, 0.1
+            text: "Close"
+            on_release: root.dismiss()
+
+
+<CustomLabel@Label>:
+    text_size: self.size
+    valign: "middle"
+    padding_x: 5
+
+<SingleLineTextInput@TextInput>:
+    multiline: False
+
+<GreenButton@Button>:
+    background_color: 1, 1, 1, 1
+    size_hint_y: None
+    height: self.parent.height * 0.150
+
+GroupScreen:
+    name: name
+    test:test
+
+    GridLayout:
+        cols: 2
+        padding : 30,30
+        spacing: 10, 10
+        row_default_height: '40dp'
+
+        CustomLabel:
+            text: 'Code'
+
+        SingleLineTextInput:
+            id: test
+            multiline: False
+            on_text_validate: name.focus = True
+
+
+        CustomLabel:
+            text: 'Name'
+
+        SingleLineTextInput:
+            id: name
+            text:' '
+            multiline: False
+            on_focus: root.display_groups(self)
+
+
+
+        GreenButton:
+            text: 'Ok'
+
+        GreenButton:
+            text: 'Cancel'
+            on_press: app.stop()

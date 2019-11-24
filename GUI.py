@@ -1,18 +1,30 @@
-# from kivy.animation import Animation
-from kivy.app import App
+# Program to explain how to use File chooser in kivy 
+		
+# import kivy module	 
+import kivy 
 from kivy.lang import Builder
-from kivy.properties import NumericProperty, StringProperty
-from kivy.uix.button import Button
+# base Class of your App inherits from the App class.	 
+# app:always refers to the instance of your application	 
+from kivy.app import App 
+		
+# this restrict the kivy version i.e 
+# below this kivy version you cannot 
+# use the app or software 
+kivy.require('1.9.0') 
+
+# BoxLayout arranges widgets in either in 
+# a vertical fashion that is one on top of 
+# another or in a horizontal fashion 
+# that is one after another. 
+
+from kivy.uix.boxlayout import BoxLayout 
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.boxlayout import BoxLayout
-# from kivy.uix.image import Image
-from kivy.config import Config
-Config.set('graphics', 'resizable', '0')
-Config.set('graphics', 'width', '800')
-Config.set('graphics', 'height', '600')
+from kivy.factory import Factory
+from kivy.properties import ObjectProperty
+from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 import os
-
 
 Builder.load_string('''
 #kivy 1.0.9
@@ -91,7 +103,8 @@ Builder.load_string('''
                         color: 0,0,0,1
                         font_size: 10
                         size_hint: (1, 0.05)
-                        on_release: main.open(fc.path, fc.selection)
+                        on_release: 
+                            root.manager.current= 'Filechooser'
 
                     Button:
                         text: 'Open Rule Editor'
@@ -139,10 +152,6 @@ Builder.load_string('''
                         size_hint_x: None
                         width: self.parent.width - 15
                         height: self.parent.width - 15 /self.image_ratio
-            
-            # FileChooser:
-            #     id: fc
-            #     on_selection: main.selected(fc.selection)
             
         #BOTTOM LAYOUT
         BoxLayout:
@@ -229,10 +238,53 @@ Builder.load_string('''
                     size_hint_x: None
                     width: self.parent.width - 30
                     height: self.parent.width - 30/self.image_ratio
-'''
-)
+<Filechooser>: 
+      
+    label: label 
+  
+    # Providing the orentation 
+    orientation: 'vertical'
+  
+    # Creating the File list / icon view 
+      
+    BoxLayout: 
+        # Creating Icon view other side 
+        FileChooserIconView: 
+            canvas.before: 
+                Color: 
+                    rgb: .5, .4, .5
+                Rectangle: 
+                    pos: self.pos 
+                    size: self.size 
+            on_selection: root.select(*args) 
+        
+    Button:
+        text: 'Back to Main Screen'
+        background_normal: ''
+        background_color: 1,1,1,1
+        color: 0,0,0,1
+        font_size: 10
+        size_hint: (0.5, 0.05)
+        on_release: 
+            root.manager.current= 'MainScreen'
+                
 
-class MainScreen(BoxLayout):
+    # Adding label 
+    Label: 
+        id: label 
+        size_hint_y: .1
+        canvas.before: 
+            Color: 
+                rgb: .5, .5, .4
+            Rectangle: 
+                pos: self.pos 
+                size: self.size 
+         
+''')
+
+file_path = ''
+
+class MainScreen(Screen):
     def open(self, path, filename):
         with open(os.path.join(path, filename[0])) as f:
             print(f.read())
@@ -240,11 +292,23 @@ class MainScreen(BoxLayout):
     def selected(self, filename):
         print("selected: %s" % filename[0])
 
-class MainApp(App):
+# create the layout class 
+class Filechooser(Screen): 
+    def select(self, *args): 
+        try: 
+            self.label.text = args[1][0] 
+            file_path = args[1][0]
+            print(file_path)
+        except: pass
 
-    def build(self):
-        start = MainScreen()
-        return start
-
-if __name__ == '__main__':
-    MainApp().run()
+sm = ScreenManager()
+sm.add_widget(MainScreen(name='MainScreen'))
+sm.add_widget(Filechooser(name='Filechooser'))
+# Create the App class 
+class MainApp(App): 
+    def build(self): 
+        return sm 
+  
+# run the App 
+if __name__ == '__main__': 
+    MainApp().run() 

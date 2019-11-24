@@ -20,7 +20,7 @@ kivy.require('1.9.0')
 from kivy.uix.boxlayout import BoxLayout 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.factory import Factory
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
@@ -32,16 +32,16 @@ Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
 
 import os
-import webbrowser
 
 # from shapeDetector import *
 
-file_path = ''
+file_path = 'img/open.png'
 CHOSEN_SHAPE = -1
 
 Builder.load_string('''
-#kivy 1.0.9
-#import TreeViewLabel kivy.uix.treeview.TreeViewLabel
+#:kivy 1.0.9
+#:import TreeViewLabel kivy.uix.treeview.TreeViewLabel
+#:import Clock kivy.clock.Clock
 <MainScreen>:
     id: main
     canvas.before:
@@ -50,6 +50,7 @@ Builder.load_string('''
         Rectangle:
             pos: self.pos
             size: self.size
+    on_enter: root.createTree(), Clock.schedule_once(root.update, 0.3)
     BoxLayout:
         orientation: 'vertical'
         space: 20
@@ -128,9 +129,7 @@ Builder.load_string('''
                         font_size: 10
                         size_hint: (1, 0.05)
                         on_release: 
-                            root.changeImg()
                             root.openRuleEditor()
-
 
                     Button:
                         text: 'Show Rules'
@@ -157,14 +156,14 @@ Builder.load_string('''
                         size_hint: (1, 0.05)
                         on_release: root.search()
                     
-                    Button:
-                        text: 'Init Tree'
-                        background_normal: ''
-                        background_color: 1,1,1,1
-                        color: 0,0,0,1
-                        font_size: 10
-                        size_hint: (1, 0.05)
-                        on_release: root.createTree()
+                    # Button:
+                    #     text: 'Init Tree'
+                    #     background_normal: ''
+                    #     background_color: 1,1,1,1
+                    #     color: 0,0,0,1
+                    #     font_size: 10
+                    #     size_hint: (1, 0.05)
+                    #     on_release: root.createTree()
 
                 BoxLayout:
                     orientation: 'vertical'
@@ -333,8 +332,7 @@ Builder.load_string('''
         size_hint: (0.5, 0.05)
         on_release: 
             root.manager.current= 'MainScreen'
-            root.changeImg()
-
+            
     # Adding label 
     Label: 
         id: label 
@@ -362,12 +360,12 @@ class CustomTreeView(TreeView):
             node.selected_node()
 
 class MainScreen(Screen):
-    sourceimg = 'img/open.png'
-    detectionimg = 'img/choose.png'
-    resultimg = 'img/white.png'
+    sourceimg = StringProperty('img/open.png')
+    detectionimg = StringProperty('img/choose.png')
+    resultimg = StringProperty('img/white.png')
 
     def changeImg(self):
-        # print(self.sourceimg)
+        print(file_path)
         self.sourceimg = file_path
 
     def openRuleEditor(self):
@@ -443,14 +441,21 @@ class MainScreen(Screen):
         
         print(shapeName)
 
+    def update(self, instance):
+        self.changeImg()
+
 # create the layout class 
 class Filechooser(Screen): 
     def select(self, *args): 
         try: 
+            global file_path
             self.label.text = args[1][0] 
             file_path = args[1][0]
             print(file_path)
         except: pass
+    def changeImg(self, instance):
+        print(file_path)
+        self.ids.source.source = StringProperty(file_path)
 
 sm = ScreenManager()
 sm.add_widget(MainScreen(name='MainScreen'))

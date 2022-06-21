@@ -5,7 +5,7 @@ imutils==0.5.3
 kivy-deps.glew==0.1.12
 kivy-deps.gstreamer==0.1.17
 kivy-deps.sdl2==0.1.22
-numpy==1.17.4
+numpy==1.22.0
 opencv-contrib-python==4.1.1.26
 pycparser==2.19
 pygame==1.9.4
